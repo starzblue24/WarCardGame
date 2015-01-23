@@ -9,14 +9,11 @@ public class War {
     CardList StackB = new CardList();
     Deck.Shuffle();
     // deal the cards 
-    Card k;
-    Card s;
-    for(int count=1; count<=Deck.getSize(); count++)
+    int cardsInDeck = Deck.getSize();
+    for(int count=1; count<=cardsInDeck/2; count++)
     {
-      k=Deck.takeCardFromTop();
-      HandA.addCardToBottom(k);
-      s=Deck.takeCardFromTop();
-      HandB.addCardToBottom(s);
+      HandA.addCardToBottom(Deck.takeCardFromTop());
+      HandB.addCardToBottom(Deck.takeCardFromTop());
     }
     // play
     System.out.println("A---player---B");
@@ -25,53 +22,38 @@ public class War {
     {
       System.out.println(HandA.getSize()+" --- round "+r+" --- "+HandB.getSize()); 
       r++;
-       System.out.println("     "+StackA.toString()+" : "+StackB.toString()+"     "); 
-    StackA.addCardToTop(HandA.takeCardFromTop());
-    StackB.addCardToTop(HandB.takeCardFromTop());
-      while(StackA.getDeck(0).compareTo(StackB.getDeck(0))==0)
-      {
+      StackA.addCardToTop(HandA.takeCardFromTop());
+      StackB.addCardToTop(HandB.takeCardFromTop());
+      System.out.println("     "+StackA.getCard(0)+" : "+StackB.getCard(0)+"     "); 
+      while(StackA.getCard(0).compareTo(StackB.getCard(0))==0 && HandA.getSize()>3 && HandB.getSize()>3)
+      {//deals with war 
         System.out.println(HandA.getSize()+" --- THIS IS WAR --- "+HandB.getSize());
         for (int suit=1; suit<=4; suit++)
-        {
-          Card h=HandA.getDeck(0);
-          HandA.takeCardFromTop();
-          StackA.addCardToTop(h);
+        {//adds cards to stack         
+          StackA.addCardToTop(HandA.takeCardFromTop());
+          StackB.addCardToTop(HandB.takeCardFromTop());
         }
-        for (int suit=1; suit<=4; suit++)
-        {
-          Card h=HandB.getDeck(0);
-          HandB.takeCardFromTop();
-          StackB.addCardToTop(h);
-        }
-        if(StackA.getDeck(0).compareTo(StackB.getDeck(0))>0)
-        {
-          for(int i=0; i<StackA.getSize(); i++)
-          {
-            HandA.addCardToBottom(StackA.getDeck(i));
-          }
-        }
-        else if(StackA.getDeck(0).compareTo(StackB.getDeck(0))<0)
-        {
-          for(int i=0; i<StackA.getSize(); i++)
-          {
-            HandB.addCardToBottom(StackB.getDeck(i));
-          }
-        }
-        
-      }
-      if(StackA.getDeck(0).compareTo(StackB.getDeck(0))>0)
+      }//player winner of war
+      if(StackA.getCard(0).compareTo(StackB.getCard(0))>0)
       {
-      HandB.addCardToBottom(StackA.takeCardFromTop());
-      HandB.addCardToBottom(StackB.takeCardFromTop());
+        int stackAsize= StackA.getSize();
+        for(int i=0; i<stackAsize; i++)
+        {
+          HandA.addCardToBottom(StackA.takeCardFromTop());
+          HandA.addCardToBottom(StackB.takeCardFromTop());
+        }
       }
-      else
+      else 
       {
-      HandA.addCardToBottom(StackA.takeCardFromTop());
-      HandA.addCardToBottom(StackB.takeCardFromTop());
+        int StackAsize=StackA.getSize();
+        for(int i=0; i<StackAsize; i++)
+        {          
+          HandB.addCardToBottom(StackA.takeCardFromTop());
+          HandB.addCardToBottom(StackB.takeCardFromTop());
+        }
       }
     }
     
   }
 }
-
 
