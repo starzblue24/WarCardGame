@@ -28,9 +28,9 @@ public class CardList
   {
       return deck.remove(random.nextInt(deck.size()));
   }
-  public Card getDeck(int y)
+  public Card getCard(int y)
   {
     return deck.get(y);
 }
-
+  
 }
